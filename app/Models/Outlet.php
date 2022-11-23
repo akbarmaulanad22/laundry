@@ -20,4 +20,9 @@ class Outlet extends Model
     {
         return $this->hasMany(Produk::class);
     }
+
+    public function pelanggans()
+    {
+        return $this->hasMany(Pelanggan::class);
+    }
 }

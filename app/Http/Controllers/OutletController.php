@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Outlet;
+use App\Models\Pelanggan;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 
@@ -63,7 +64,7 @@ class OutletController extends Controller
      */
     public function show(Outlet $outlet)
     {
-        $p = Produk::where('outlet_id', $outlet->id)->get();
+        $p = Pelanggan::where('outlet_id', $outlet->id)->latest()->get();
         return view('produk.index', compact('p','outlet'));
     }
 

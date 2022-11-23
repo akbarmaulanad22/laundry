@@ -11,9 +11,14 @@ class Pelanggan extends Model
 
     protected $guarded = ['id'];
 
-    public function produk()
+    public function produks()
     {
         return $this->hasMany(Produk::class);
+    }
+
+    public function outlet()
+    {
+        return $this->belongsTo(Outlet::class);
     }
     
 }

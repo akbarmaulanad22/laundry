@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('pelanggans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('outlet_id')->references('id')->on('outlets')->onDelete('cascade');
             $table->string('nama', 100);
             $table->text('alamat');
             $table->string('telepon')->length(13);
