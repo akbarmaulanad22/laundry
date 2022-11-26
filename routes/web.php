@@ -4,6 +4,7 @@ use App\Http\Controllers\OutletController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,6 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::resource('outlet', OutletController::class);
-// Route::resource('outlet/produk', ProdukController::class);
 Route::resource('outlet/pelanggan', PelangganController::class)->except(['index', 'create', 'show', 'destroy']);
 Route::post('outlet/{id}/pelanggan/create', [PelangganController::class, 'create'])->name('produk.create');
+Route::post('outlet/{id}/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');

@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('outlets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->reference('id')->on('users')->onDelete('cascade');
-            $table->string('nama', 100);
-            $table->text ('alamat');
+            $table->string('nama', 100)->nullable();
+            $table->text ('alamat')->nullable();
             $table->string('telepon', 13);
             $table->timestamps();
         });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Outlet;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -33,13 +34,21 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'telephone' => ['required', 'string', 'max:13'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $o = Outlet::create([
+            'nama' => $request->name,
+            'telepon' => $request->telephone
+        ]);
+
         $user = User::create([
+            'outlet_id' => $o->id,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),

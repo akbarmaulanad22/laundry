@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'outlet_id',
     ];
 
     /**
@@ -42,8 +43,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function outlets()
+    public function outlet()
     {
-        return $this->hasMany(Outlet::class);
+        return $this->belongsTo(Outlet::class);
     }
 }

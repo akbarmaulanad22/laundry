@@ -44,6 +44,12 @@
                                                     </form>
                                                 </div>
                                                 <div class="my-2">
+                                                    <form action="{{ route('transaksi.index', $outlet->id) }}" method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="my-1 py-2 px-3 bg-teal-200 rounded-full text-white lg:mx-1 ">Transaksi</button>
+                                                    </form>
+                                                </div>
+                                                <div class="my-2">
                                                     <a href="{{ route('outlet.show', $outlet->id) }}" class="my-1 py-[0.58rem] px-[1.40rem] bg-lime-400 rounded-full text-white lg:mx-1 ">Cek</a>
                                                 </div>
                                             </td>
