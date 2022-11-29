@@ -12,10 +12,10 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $t = Transaksi::where('outlet_id', $id)->get();
-        dd($t);
+        $t = Transaksi::where('outlet_id', auth()->user()->outlet->id)->get();
+        return view('transaksi.index', compact('t'));
     }
 
     /**
@@ -42,10 +42,10 @@ class TransaksiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Transaksi $transaksi)
     {
         //
     }
@@ -53,10 +53,10 @@ class TransaksiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Transaksi $transaksi)
     {
         //
     }
@@ -65,21 +65,25 @@ class TransaksiController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Transaksi $transaksi)
     {
-        //
+        $transaksi->update([
+            'status' => 'Dibayar'
+        ]);
+
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Transaksi $transaksi)
     {
         //
     }

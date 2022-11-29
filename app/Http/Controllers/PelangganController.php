@@ -15,7 +15,7 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        $p = Pelanggan::paginate(10)->latest();
+        $p = Pelanggan::where('outlet_id', auth()->user()->outlet->id)->latest()->paginate(10);
         return view('pelanggan.index', compact('p'));
     }
 

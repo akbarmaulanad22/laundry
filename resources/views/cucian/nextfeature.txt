@@ -1,0 +1,6 @@
+role
+detail transaksi
+search karyawan
+search pelanggan
+search cucian
+search transaksi

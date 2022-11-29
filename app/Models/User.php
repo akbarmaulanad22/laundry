@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'telephone',
         'password',
         'outlet_id',
     ];
@@ -42,6 +43,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function transaksis()
+    {
+        return $this->hasMany(Transaksi::class);
+    }
 
     public function outlet()
     {

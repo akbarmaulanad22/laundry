@@ -24,8 +24,7 @@ return new class extends Migration
             // $table->integer('biaya_tambahan')->length(11);
             // $table->double('diskon');
             // $table->integer('pajak')->length(11);
-            $table->enum('status', ['Baru', 'Proses', 'Selesai', 'Diambil']);
-            $table->enum('dibayar', ['Dibayar', 'Belum Dibayar'])->default('Belum dibayar');
+            $table->enum('status', ['Dibayar', 'Belum Dibayar'])->default('Belum dibayar');
             $table->timestamps();
         });
     }

@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CucianController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +36,18 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('outlet', OutletController::class);
-Route::resource('outlet/pelanggan', PelangganController::class)->except(['index', 'create', 'show', 'destroy']);
-Route::post('outlet/{id}/pelanggan/create', [PelangganController::class, 'create'])->name('produk.create');
-Route::post('outlet/{id}/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+Route::get('pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
+
+
+Route::get('karyawan', [UserController::class, 'index'])->name('karyawan.index');
+Route::get('karyawan/create', [UserController::class, 'create'])->name('karyawan.create');
+Route::post('karyawan', [UserController::class, 'store'])->name('karyawan.store');
+Route::delete('karyawan/{user}', [UserController::class, 'destroy'])->name('karyawan.destroy');
+
+
+Route::resource('cucian', CucianController::class)->except(['show', 'destroy']);
+Route::put('cucian/{cucian}/status', [CucianController::class, 'status'])->name('cucian.status');
+
+
+Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+Route::put('transaksi/{transaksi}/update', [TransaksiController::class, 'update'])->name('transaksi.update');

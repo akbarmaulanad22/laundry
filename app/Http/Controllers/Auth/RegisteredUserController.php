@@ -51,6 +51,7 @@ class RegisteredUserController extends Controller
             'outlet_id' => $o->id,
             'name' => $request->name,
             'email' => $request->email,
+            'telephone' => $request->telephone,
             'password' => Hash::make($request->password),
         ]);
 

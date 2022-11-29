@@ -16,13 +16,19 @@ class Outlet extends Model
         return $this->hasMany(User::class);
     }
 
-    public function produks()
+    public function cucians()
     {
-        return $this->hasMany(Produk::class);
+        return $this->hasMany(Cucian::class);
     }
 
     public function pelanggans()
     {
         return $this->hasMany(Pelanggan::class);
     }
+    
+    public function transaksis()
+    {
+        return $this->hasMany(Transaksi::class);
+    }
+
 }
