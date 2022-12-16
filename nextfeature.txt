@@ -1,7 +1,14 @@
 role
-detail transaksi
+mengganti tampilan table ke laravel yajra
+cetak laporan transaksi 
+tambah diskon
+tambah pajak
+cetak struk transaksi 
+ubah tampilan home
+
+
+detail transaksi (completed) 
 search karyawan
 search pelanggan
 search cucian
 search transaksi
-laporan

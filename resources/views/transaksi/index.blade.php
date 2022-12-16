@@ -90,7 +90,7 @@
                                             </div>
                                         </td>
                                         <td class="py-6">
-                                            <div class="flex justify-center pl-5">
+                                            <div class="flex justify-around pl-5">
                                                 @if ($transaksi->status != 'Dibayar')
                                                     <form action="{{ route('transaksi.update', $transaksi->id) }}" method="post">
                                                         @csrf
@@ -108,6 +108,14 @@
                                                         </div>
                                                     </div>
                                                 @endif
+                                                <form action="{{ route('transaksi.show', $transaksi->id) }}" method="post">
+                                                    @csrf
+                                                    <button type="submit"  class="rounded-full focus:outline-none focus:ring-2  focus:bg-amber-50 focus:ring-amber-800">
+                                                        <div class="py-2 px-8 bg-amber-100 text-amber-700 rounded-full">
+                                                            <p>Detail</p>
+                                                        </div>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

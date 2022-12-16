@@ -51,3 +51,4 @@ Route::put('cucian/{cucian}/status', [CucianController::class, 'status'])->name(
 
 Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
 Route::put('transaksi/{transaksi}/update', [TransaksiController::class, 'update'])->name('transaksi.update');
+Route::post('transaksi/{transaksi}/show', [TransaksiController::class, 'show'])->name('transaksi.show');
