@@ -110,8 +110,8 @@
                                                 @endif
                                                 <form action="{{ route('transaksi.show', $transaksi->id) }}" method="post">
                                                     @csrf
-                                                    <button type="submit"  class="rounded-full focus:outline-none focus:ring-2  focus:bg-amber-50 focus:ring-amber-800">
-                                                        <div class="py-2 px-8 bg-amber-100 text-amber-700 rounded-full">
+                                                    <button type="submit"  class="rounded-full focus:outline-none focus:ring-2  focus:bg-teal-50 focus:ring-bg-teal-800">
+                                                        <div class="py-2 px-8 bg-teal-100 text-bg-teal-700 rounded-full">
                                                             <p>Detail</p>
                                                         </div>
                                                     </button>
