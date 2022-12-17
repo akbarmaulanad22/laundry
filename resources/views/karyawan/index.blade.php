@@ -26,9 +26,12 @@
                                 </div>
                             </a>
                         </div> --}}
-                        <a  href="{{ route('karyawan.create') }}"  class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded text-sm font-medium leading-none text-white">
-                            <p class="text-sm font-medium leading-none text-white">Tambah Karyawan</p>
-                        </a>
+                        @role('Owner')
+                            <a  href="{{ route('karyawan.create') }}"  class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded text-sm font-medium leading-none text-white">
+                                <p class="text-sm font-medium leading-none text-white">Tambah Karyawan</p>
+                            </a>
+                        @endrole
+
                     </div>
                     <div class="mt-7 overflow-x-auto">
                         <table class="w-full whitespace-nowrap">
@@ -66,11 +69,13 @@
                                             <p class="text-base font-medium leading-none text-gray-700 mr-2">Role</p>
                                         </div>
                                     </th>
+                                    @role('Owner')
                                     <th class="pb-5">
                                         <div class="flex justify-center pl-5 text-center">
                                             <p class="text-base font-medium leading-none text-gray-700 mr-2">!</p>
                                         </div>
                                     </th>
+                                    @endrole
                                 </tr>
                             </thead>
                             <tbody>
@@ -105,23 +110,35 @@
                                         </td>
                                         <td class="py-6 px-6">
                                             <div class="flex justify-center pl-5">
-                                                <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ $k->role }}</p>
+                                                @foreach ($k->getRoleNames() as $role)
+                                                    <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ $role }}</p>
+                                                @endforeach
                                             </div>
                                         </td>
-                                        <td class="py-6">
-                                            <div class="flex justify-center pl-5">
-                                                <form action="{{ route('karyawan.destroy', $k->id) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"  class="px-2  rounded-full focus:outline-none focus:ring-2  focus:bg-rose-50 focus:ring-rose-800">
-                                                        <div class="py-2 px-8 bg-rose-100 text-rose-700 rounded-full">
-                                                            <p>Hapus</p>
-                                                        </div>
-                                                    </button>
-
-                                                </form>
-                                            </div>
-                                        </td>
+                                        @role('Owner')
+                                            <td class="py-6">
+                                                <div class="flex justify-center pl-5">
+                                                    <form action="{{ route('karyawan.destroy', $k->id) }}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"  class="px-2  rounded-full focus:outline-none focus:ring-2  focus:bg-rose-50 focus:ring-rose-800">
+                                                            <div class="py-2 px-8 bg-rose-100 text-rose-700 rounded-full">
+                                                                <p>Hapus</p>
+                                                            </div>
+                                                        </button>
+                                                    </form>
+                                                    <form action="{{ route('karyawan.update', $k->id) }}" method="post">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit"  class="px-2  rounded-full focus:outline-none focus:ring-2  focus:bg-lime-50 focus:ring-lime-800">
+                                                            <div class="py-2 px-8 bg-lime-100 text-lime-700 rounded-full">
+                                                                <p>Promote</p>
+                                                            </div>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        @endrole
 
                                     </tr>
                                 @endforeach

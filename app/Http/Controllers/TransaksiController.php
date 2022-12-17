@@ -70,6 +70,10 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, Transaksi $transaksi)
     {
+        if(!auth()->user()->hasRole(['Admin'])){
+            abort(403, 'USER DOES NOT HAVE THE RIGHT ROLES.');
+        }
+
         $transaksi->update([
             'status' => 'Dibayar'
         ]);

@@ -12,11 +12,21 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    
     public function index()
     {
-        $karyawan = User::where('outlet_id', auth()->user()->outlet->id)->latest()->paginate(10);
-                        // ->where('name', "LIKE", "%ba%")
-        return view('karyawan.index', compact('karyawan'));
+        try {
+            $karyawan = User::with('roles')->whereHas('roles', function($q){
+                $q->where('name', 'Admin')
+                    ->orWhere('name', 'Kasir');
+                })
+                ->where('outlet_id', auth()->user()->outlet->id)
+                ->latest()->paginate(10);
+    
+            return view('karyawan.index', compact('karyawan'));
+        } catch (\Throwable $th) {
+            return view('auth.login');
+        }
     }
 
     public function create(Request $request)
@@ -26,7 +36,6 @@ class UserController extends Controller
 
     public function store(Request $request){
 
-        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
@@ -41,18 +50,23 @@ class UserController extends Controller
             'email' => $request->email,
             'telephone' => $request->telephone,
             'password' => Hash::make($request->password),
-        ]);
+        ])->assignRole(2);
 
         event(new Registered($user));
 
-        Auth::login($user);
-
         return to_route('karyawan.index');
+    }
+    public function update(User $user)
+    {
+        if (!$user->hasRole(['Owner', 'Admin'])) {
+            $user->syncRoles(2);
+        }
+        return back();
     }
 
     public function destroy(User $user)
     {
-        if ($user->id != auth()->user()->id) {
+        if (!$user->hasRole('Owner')) {
             $user->delete();
         }
         return to_route('karyawan.index');

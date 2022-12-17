@@ -28,6 +28,10 @@ class CucianController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->hasRole(['Admin', 'Kasir'])){
+            abort(403, 'USER DOES NOT HAVE THE RIGHT ROLES.');
+        }
+        
         return view('cucian.create');
     }
 
@@ -38,7 +42,11 @@ class CucianController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {        
+        if(!auth()->user()->hasRole(['Admin', 'Kasir'])){
+            abort(403, 'USER DOES NOT HAVE THE RIGHT ROLES.');
+        }
+        
         $rules = $request->validate([
             'nama_pelanggan' => 'required',
             'telepon' => 'required:max:13',
@@ -99,6 +107,10 @@ class CucianController extends Controller
      */
     public function edit(Cucian $cucian)
     {
+        if(!auth()->user()->hasRole(['Admin', 'Kasir'])){
+            abort(403, 'USER DOES NOT HAVE THE RIGHT ROLES.');
+        }
+        
         if ($cucian->status == 'Diambil') {
             abort(404);
         }
@@ -114,6 +126,10 @@ class CucianController extends Controller
      */
     public function update(Request $request, Cucian $cucian)
     {
+        if(!auth()->user()->hasRole(['Admin', 'Kasir'])){
+            abort(403, 'USER DOES NOT HAVE THE RIGHT ROLES.');
+        }
+        
         $request->validate([
             'nama_cucian' => 'required',
             'jenis' => 'required',
@@ -144,6 +160,11 @@ class CucianController extends Controller
 
     public function status(Cucian $cucian)
     {
+
+        if(!auth()->user()->hasRole('Admin')){
+            abort(403, 'USER DOES NOT HAVE THE RIGHT ROLES.');
+        }
+        
         $status  = '';
         if ($cucian->status == 'Baru')
         {

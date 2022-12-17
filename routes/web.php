@@ -36,19 +36,33 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
+Route::middleware(['auth', 'role:Owner|Admin|Kasir'])->group(function () {
+    
+    Route::middleware(['role:Owner'])->group(function () {
+        
+        Route::get('karyawan/create', [UserController::class, 'create'])->name('karyawan.create');
+        Route::post('karyawan', [UserController::class, 'store'])->name('karyawan.store');
+        Route::put('karyawan/{user}', [UserController::class, 'update'])->name('karyawan.update');
+        Route::delete('karyawan/{user}', [UserController::class, 'destroy'])->name('karyawan.destroy');
 
+        // meilhat dan membuat laporan
+        
+    });
 
-Route::get('karyawan', [UserController::class, 'index'])->name('karyawan.index');
-Route::get('karyawan/create', [UserController::class, 'create'])->name('karyawan.create');
-Route::post('karyawan', [UserController::class, 'store'])->name('karyawan.store');
-Route::delete('karyawan/{user}', [UserController::class, 'destroy'])->name('karyawan.destroy');
+    Route::middleware(['role:Admin'])->group(function () {
+        Route::put('cucian/{cucian}/status', [CucianController::class, 'status'])->name('cucian.status');
+        Route::put('transaksi/{transaksi}/update', [TransaksiController::class, 'update'])->name('transaksi.update');
+        
+    });
+    
+    Route::get('pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
+    
+    Route::get('karyawan', [UserController::class, 'index'])->name('karyawan.index');
+    
+    Route::resource('cucian', CucianController::class)->except(['show', 'destroy']);
+    
+    Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+    
+    Route::post('transaksi/{transaksi}/show', [TransaksiController::class, 'show'])->name('transaksi.show');
 
-
-Route::resource('cucian', CucianController::class)->except(['show', 'destroy']);
-Route::put('cucian/{cucian}/status', [CucianController::class, 'status'])->name('cucian.status');
-
-
-Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
-Route::put('transaksi/{transaksi}/update', [TransaksiController::class, 'update'])->name('transaksi.update');
-Route::post('transaksi/{transaksi}/show', [TransaksiController::class, 'show'])->name('transaksi.show');
+});

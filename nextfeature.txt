@@ -5,6 +5,8 @@ tambah diskon
 tambah pajak
 cetak struk transaksi 
 ubah tampilan home
+ubah user profile
+ubah Laundry profile
 
 
 detail transaksi (completed) 
