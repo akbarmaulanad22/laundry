@@ -9,7 +9,8 @@
                 </div>
                 <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
                     <div class="mt-7 overflow-x-auto">
-                        <table class="w-full whitespace-nowrap">
+                        {{ $dataTable->table() }}
+                        {{-- <table class="w-full whitespace-nowrap">
                             <thead>
                                 <tr>
                                     <th class="pb-5">
@@ -124,9 +125,15 @@
                                 @endforeach
                                 <tr class="h-3"></tr>
                             </tbody>
-                        </table>
+                        </table> --}}
                     </div>
                 </div>
             </div>
 
 @endsection
+@push('scripts')
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+    <script src="/vendor/datatables/buttons.server-side.js"></script>
+    {!! $dataTable->scripts() !!}
+@endpush

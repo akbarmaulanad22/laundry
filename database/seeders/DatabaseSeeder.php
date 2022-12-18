@@ -61,5 +61,10 @@ class DatabaseSeeder extends Seeder
             'telephone' => '089862659825',
             'password' => bcrypt(123123123),
         ])->assignRole($role1);
+
+        \App\Models\User::factory(5000)->create()->each(function ($user) {
+            $user->assignRole(3);
+        });
+        
     }
 }

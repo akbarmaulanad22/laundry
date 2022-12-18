@@ -28,75 +28,13 @@
                         </div> --}}
                     </div>
                     <div class="mt-7 overflow-x-auto">
-                        <table class="w-full whitespace-nowrap">
-                            <thead>
-                                <tr>
-                                    <th class="pb-5">
-                                        <div class="ml-5">
-                                            <div class="w-5 h-5 flex flex-shrink-0 justify-center relative">
-                                                #
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th class="pb-5">
-                                        <div class="flex justify-center pl-5">
-                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">Nama</p>
-                                        </div>
-                                    </th>
-                                    <th class="pb-5">
-                                        <div class="flex justify-center pl-5">
-                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">Alamat</p>
-                                        </div>
-                                    </th>
-                                    {{-- <th class="pb-5">
-                                        <div class="flex justify-center pl-5">
-                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">Email</p>
-                                        </div>
-                                    </th> --}}
-                                    <th class="pb-5">
-                                        <div class="flex justify-center pl-5">
-                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">Telepon</p>
-                                        </div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($p as $pelanggan)
-                                    <tr tabindex="0" class="focus:outline-none h-16 border border-gray-100 rounded">
-                                        <td class="py-6">
-                                            <div class="ml-5">
-                                                <div class="w-5 h-5 flex flex-shrink-0 justify-center relative">
-                                                    {{ $loop->iteration }}
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="py-6">
-                                            <div class="flex justify-center pl-5">
-                                                <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ $pelanggan->nama }}</p>
-                                            </div>
-                                        </td>
-                                        <td class="py-6">
-                                            <div class="flex justify-center pl-5">
-                                                <p class="text-base font-medium leading-none text-gray-700 mr-2">Ciapus bogor selatan jawabarat indonesia bumi</p>
-                                            </div>
-                                        </td>
-                                        {{-- <td class="py-6">
-                                            <div class="flex justify-center pl-5">
-                                                <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ $pelanggan->email }}</p>
-                                            </div>
-                                        </td> --}}
-                                        <td class="py-6">
-                                            <div class="flex justify-center pl-5">
-                                                <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ $pelanggan->telepon }}</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                <tr class="h-3"></tr>
-                            </tbody>
-                        </table>
+                        {{ $dataTable->table() }}
                     </div>
                 </div>
             </div>
 
 @endsection
+@push('scripts')
+    <script src="/vendor/datatables/buttons.server-side.js"></script>
+    {!! $dataTable->scripts() !!}
+@endpush

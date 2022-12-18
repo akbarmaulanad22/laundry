@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\TransaksiDataTable;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
@@ -12,10 +13,11 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TransaksiDataTable $dataTable)
     {
-        $t = Transaksi::where('outlet_id', auth()->user()->outlet->id)->get();
-        return view('transaksi.index', compact('t'));
+        return $dataTable->render('transaksi.index');
+        // $t = Transaksi::where('outlet_id', auth()->user()->outlet->id)->get();
+        // return view('transaksi.index', compact('t'));
     }
 
     /**

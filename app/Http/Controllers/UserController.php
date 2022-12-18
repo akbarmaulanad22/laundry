@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
@@ -13,20 +14,23 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
-        try {
-            $karyawan = User::with('roles')->whereHas('roles', function($q){
-                $q->where('name', 'Admin')
-                    ->orWhere('name', 'Kasir');
-                })
-                ->where('outlet_id', auth()->user()->outlet->id)
-                ->latest()->paginate(10);
+
+        return $dataTable->render('karyawan.index');
+        
+        // try {
+        //     $karyawan = User::with('roles')->whereHas('roles', function($q){
+        //         $q->where('name', 'Admin')
+        //             ->orWhere('name', 'Kasir');
+        //         })
+        //         ->where('outlet_id', auth()->user()->outlet->id)
+        //         ->latest()->paginate(10);
     
-            return view('karyawan.index', compact('karyawan'));
-        } catch (\Throwable $th) {
-            return view('auth.login');
-        }
+        //     return view('karyawan.index', compact('karyawan'));
+        // } catch (\Throwable $th) {
+        //     return view('auth.login');
+        // }
     }
 
     public function create(Request $request)
@@ -50,7 +54,7 @@ class UserController extends Controller
             'email' => $request->email,
             'telephone' => $request->telephone,
             'password' => Hash::make($request->password),
-        ])->assignRole(2);
+        ])->assignRole(3);
 
         event(new Registered($user));
 

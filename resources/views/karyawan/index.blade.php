@@ -33,8 +33,9 @@
                         @endrole
 
                     </div>
-                    <div class="mt-7 overflow-x-auto">
-                        <table class="w-full whitespace-nowrap">
+                    <div class="mt-7 overflow-x-hidden md:overflow-x-auto">
+                        {{ $dataTable->table() }}
+                        {{-- <table class="w-full whitespace-nowrap">
                             <thead>
                                 <tr>
                                     <th class="pb-5">
@@ -54,11 +55,6 @@
                                             <p class="text-base font-medium leading-none text-gray-700 mr-2">Alamat</p>
                                         </div>
                                     </th>
-                                    {{-- <th class="pb-5">
-                                        <div class="flex justify-center pl-5">
-                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">Email</p>
-                                        </div>
-                                    </th> --}}
                                     <th class="pb-5">
                                         <div class="flex justify-center pl-5">
                                             <p class="text-base font-medium leading-none text-gray-700 mr-2">Telepon</p>
@@ -98,11 +94,6 @@
                                                 <p class="text-base font-medium leading-none text-gray-700 mr-2">Ciapus bogor selatan jawabarat indonesia bumi</p>
                                             </div>
                                         </td>
-                                        {{-- <td class="py-6">
-                                            <div class="flex justify-center pl-5">
-                                                <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ $k->email }}</p>
-                                            </div>
-                                        </td> --}}
                                         <td class="py-6">
                                             <div class="flex justify-center pl-5">
                                                 <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ $k->telephone }}</p>
@@ -144,9 +135,15 @@
                                 @endforeach
                                 <tr class="h-3"></tr>
                             </tbody>
-                        </table>
+                        </table> --}}
                     </div>
                 </div>
             </div>
 
 @endsection
+@push('scripts')
+<script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+<script src="/vendor/datatables/buttons.server-side.js"></script>
+{!! $dataTable->scripts() !!}
+    {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
+@endpush
