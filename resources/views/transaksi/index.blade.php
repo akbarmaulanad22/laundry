@@ -8,8 +8,27 @@
                     </div>
                 </div>
                 <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+                    <div class="sm:flex items-center justify-between">
+                        <div class="flex items-center">
+                            <a class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" href="#">
+                                <div class="py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full">
+                                    <p>Semua</p>
+                                </div>
+                            </a>
+                            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8" href="#">
+                                <div class="py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
+                                    <p>Dibayar</p>
+                                </div>
+                            </a>
+                            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8" href="#">
+                                <div class="py-2 px-8 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
+                                    <p>Belum dibayar</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     <div class="mt-7 overflow-x-auto">
-                        {{ $dataTable->table() }}
+                        {{-- {{ $dataTable->table() }} --}}
                         {{-- <table class="w-full whitespace-nowrap">
                             <thead>
                                 <tr>
@@ -126,14 +145,74 @@
                                 <tr class="h-3"></tr>
                             </tbody>
                         </table> --}}
+                        <table id="example" class="display responsive nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th width="5%">No</th>
+                                    <th width="10%">Kode</th>
+                                    <th width="20%">Nama</th>
+                                    <th width="15%">Status</th>
+                                    <th width="20%">Cucian</th>
+                                    <th width="10%">Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
 
 @endsection
 @push('scripts')
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
-    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
-    <script src="/vendor/datatables/buttons.server-side.js"></script>
-    {!! $dataTable->scripts() !!}
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('transaksi.json') }}',
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'kode', name: 'kode'},
+                    {data: 'nama', name: 'nama'},
+                    {data: 'status', name: 'status'},
+                    {data: 'cucian', name: 'cucian'},
+                    {data: 'total', name: 'total'},
+                    {data: 'action', name: 'action', orderable: false , searchable: false},
+                ],
+                lengthChange: false,
+                searchDelay: 200,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4, 5 ]
+                        }
+                    },
+                ]
+            });
+        } );
+    </script>
 @endpush

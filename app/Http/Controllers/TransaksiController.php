@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\TransaksiDataTable;
+use App\Models\Pelanggan;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class TransaksiController extends Controller
 {
@@ -13,11 +15,9 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(TransaksiDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('transaksi.index');
-        // $t = Transaksi::where('outlet_id', auth()->user()->outlet->id)->get();
-        // return view('transaksi.index', compact('t'));
+        return view('transaksi.index');
     }
 
     /**
@@ -92,5 +92,29 @@ class TransaksiController extends Controller
     public function destroy(Transaksi $transaksi)
     {
         //
+    }
+
+    public function data()
+    {
+        $model = Transaksi::with('cucians')
+                        ->where('outlet_id', '=', auth()->user()->outlet->id);
+        return DataTables::eloquent($model)
+                            ->addIndexColumn()
+                            ->addColumn('nama', function (Transaksi $transaksi) {
+                                return $transaksi->pelanggan->nama;
+                            })
+                            ->addColumn('cucian', function (Transaksi $transaksi) {
+                                return $transaksi->cucians->map(function($cucian) {
+                                    return $cucian->nama;
+                                })->implode('<br>');
+                            })
+                            ->addColumn('total', function (Transaksi $transaksi) {
+                                return $transaksi->cucians->sum('harga');
+                            })
+                            ->addColumn('action', function($model){
+                                return view('transaksi.button', compact('model'));
+                            })
+                            ->rawColumns(['cucian', 'action'])
+                            ->toJson();
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('outlet_id')->references('id')->on('outlets')->onDelete('cascade');
             $table->foreignId('pelanggan_id')->references('id')->on('pelanggans')->onDelete('cascade');
-            $table->string('kode_transaksi', 100);
+            $table->string('kode', 100);
             // $table->date('batas_waktu');
             // $table->date('tanggal_pembayaran');
             // $table->integer('biaya_tambahan')->length(11);

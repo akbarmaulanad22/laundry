@@ -9,7 +9,7 @@
                 </div>
                 <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
                     <div class="sm:flex items-center justify-between">
-                        {{-- <div class="flex items-center">
+                        <div class="flex items-center">
                             <a class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" href="#">
                                 <div class="py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full">
                                     <p>Semua</p>
@@ -25,16 +25,71 @@
                                     <p>Membership</p>
                                 </div>
                             </a>
-                        </div> --}}
+                        </div>
                     </div>
-                    <div class="mt-7 overflow-x-auto">
-                        {{ $dataTable->table() }}
+                    <div class="mt-9 overflow-x-hidden md:overflow-x-auto">
+                        <table id="example" class="display responsive nowrap" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th width="5%">No</th>
+                                    <th>Nama</th>
+                                    <th>Alamat</th>
+                                    <th>Telepon</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
 
 @endsection
 @push('scripts')
-    <script src="/vendor/datatables/buttons.server-side.js"></script>
-    {!! $dataTable->scripts() !!}
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('pelanggan.json') }}',
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'nama', name: 'nama'},
+                    {data: 'alamat', name: 'alamat'},
+                    {data: 'telepon', name: 'telepon'},
+                ],
+                lengthChange: false,
+                searchDelay: 200,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, ]
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, ]
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, ]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, ]
+                        }
+                    },
+                ]
+            });
+        } );
+    </script>
 @endpush

@@ -10,27 +10,15 @@ use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\F;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
     
-    public function index(UsersDataTable $dataTable)
+    public function index()
     {
-
-        return $dataTable->render('karyawan.index');
-        
-        // try {
-        //     $karyawan = User::with('roles')->whereHas('roles', function($q){
-        //         $q->where('name', 'Admin')
-        //             ->orWhere('name', 'Kasir');
-        //         })
-        //         ->where('outlet_id', auth()->user()->outlet->id)
-        //         ->latest()->paginate(10);
-    
-        //     return view('karyawan.index', compact('karyawan'));
-        // } catch (\Throwable $th) {
-        //     return view('auth.login');
-        // }
+        return view('karyawan.index');
     }
 
     public function create(Request $request)
@@ -74,5 +62,24 @@ class UserController extends Controller
             $user->delete();
         }
         return to_route('karyawan.index');
+    }
+
+    public function data()
+    {
+        $model = User::with('roles')
+                        ->whereRelation('roles', 'name', '!=', 'Owner')
+                        ->where('outlet_id', '=', auth()->user()->outlet->id);
+        return DataTables::eloquent($model)
+                            ->addIndexColumn()
+                            ->addColumn('roles', function (User $user) {
+                                return $user->roles->map(function($roles) {
+                                    return $roles->name;
+                                })->implode('<br>');
+                            })
+                            ->addColumn('action', function($model){
+                                return view('karyawan.button', compact('model'));
+                            })
+                            ->rawColumns(['action'])
+                            ->toJson();
     }
 }

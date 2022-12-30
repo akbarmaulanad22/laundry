@@ -9,7 +9,7 @@
                 </div>
                 <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
                     <div class="sm:flex items-center justify-between pt-1 pb-6">
-                        {{-- <div class="flex items-center">
+                        <div class="flex items-center">
                             <a class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" href="#">
                                 <div class="py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full">
                                     <p>Semua</p>
@@ -25,7 +25,7 @@
                                     <p>Kasir</p>
                                 </div>
                             </a>
-                        </div> --}}
+                        </div>
                         @role('Owner')
                             <a  href="{{ route('karyawan.create') }}"  class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded text-sm font-medium leading-none text-white">
                                 <p class="text-sm font-medium leading-none text-white">Tambah Karyawan</p>
@@ -33,117 +33,76 @@
                         @endrole
 
                     </div>
-                    <div class="mt-7 overflow-x-hidden md:overflow-x-auto">
-                        {{ $dataTable->table() }}
-                        {{-- <table class="w-full whitespace-nowrap">
+                    <div class="mt-2 overflow-x-hidden md:overflow-x-auto">
+                        <table id="example" class="display responsive nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th class="pb-5">
-                                        <div class="ml-5">
-                                            <div class="w-5 h-5 flex flex-shrink-0 justify-center relative">
-                                                #
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th class="pb-5 px-10">
-                                        <div class="flex justify-center pl-5">
-                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">Nama</p>
-                                        </div>
-                                    </th>
-                                    <th class="pb-5">
-                                        <div class="flex justify-center pl-5">
-                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">Alamat</p>
-                                        </div>
-                                    </th>
-                                    <th class="pb-5">
-                                        <div class="flex justify-center pl-5">
-                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">Telepon</p>
-                                        </div>
-                                    </th>
-                                    <th class="pb-5 px-6">
-                                        <div class="flex justify-center pl-5">
-                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">Role</p>
-                                        </div>
-                                    </th>
-                                    @role('Owner')
-                                    <th class="pb-5">
-                                        <div class="flex justify-center pl-5 text-center">
-                                            <p class="text-base font-medium leading-none text-gray-700 mr-2">!</p>
-                                        </div>
-                                    </th>
-                                    @endrole
+                                    <th width="5%">No</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Roles</th>
+                                    <th>Telephone</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($karyawan as $k)
-                                    <tr tabindex="0" class="focus:outline-none h-16 border border-gray-100 rounded">
-                                        <td class="py-6">
-                                            <div class="ml-5">
-                                                <div class="w-5 h-5 flex flex-shrink-0 justify-center relative">
-                                                    {{ $loop->iteration }}
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="py-6 px-10">
-                                            <div class="flex justify-center pl-5">
-                                                <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ $k->name }}</p>
-                                            </div>
-                                        </td>
-                                        <td class="py-6">
-                                            <div class="flex justify-center pl-5">
-                                                <p class="text-base font-medium leading-none text-gray-700 mr-2">Ciapus bogor selatan jawabarat indonesia bumi</p>
-                                            </div>
-                                        </td>
-                                        <td class="py-6">
-                                            <div class="flex justify-center pl-5">
-                                                <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ $k->telephone }}</p>
-                                            </div>
-                                        </td>
-                                        <td class="py-6 px-6">
-                                            <div class="flex justify-center pl-5">
-                                                @foreach ($k->getRoleNames() as $role)
-                                                    <p class="text-base font-medium leading-none text-gray-700 mr-2">{{ $role }}</p>
-                                                @endforeach
-                                            </div>
-                                        </td>
-                                        @role('Owner')
-                                            <td class="py-6">
-                                                <div class="flex justify-center pl-5">
-                                                    <form action="{{ route('karyawan.destroy', $k->id) }}" method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"  class="px-2  rounded-full focus:outline-none focus:ring-2  focus:bg-rose-50 focus:ring-rose-800">
-                                                            <div class="py-2 px-8 bg-rose-100 text-rose-700 rounded-full">
-                                                                <p>Hapus</p>
-                                                            </div>
-                                                        </button>
-                                                    </form>
-                                                    <form action="{{ route('karyawan.update', $k->id) }}" method="post">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit"  class="px-2  rounded-full focus:outline-none focus:ring-2  focus:bg-lime-50 focus:ring-lime-800">
-                                                            <div class="py-2 px-8 bg-lime-100 text-lime-700 rounded-full">
-                                                                <p>Promote</p>
-                                                            </div>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        @endrole
-
-                                    </tr>
-                                @endforeach
-                                <tr class="h-3"></tr>
-                            </tbody>
-                        </table> --}}
+                        </table>
+                        
                     </div>
                 </div>
             </div>
 
 @endsection
 @push('scripts')
-<script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
-<script src="/vendor/datatables/buttons.server-side.js"></script>
-{!! $dataTable->scripts() !!}
-    {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('karyawan.json') }}',
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'roles', name: 'roles.name', orderable: false, searchable: false},
+                    {data: 'telephone', name: 'telephone'},
+                    {data: 'action', name: 'action', orderable: false , searchable: false, exportable: false},
+                ],
+                lengthChange: false,
+                searchDelay: 200,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        }
+                    },
+                ]
+            });
+        } );
+    </script>
+    
 @endpush

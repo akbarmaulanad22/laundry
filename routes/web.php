@@ -7,7 +7,9 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Yajra\DataTables\Facades\DataTables;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,12 +58,18 @@ Route::middleware(['auth', 'role:Owner|Admin|Kasir'])->group(function () {
     });
     
     Route::get('pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
+
+    Route::get('pelanggan/json', [PelangganController::class, 'data'])->name('pelanggan.json');
+    
+    Route::get('karyawan/json', [UserController::class, 'data'])->name('karyawan.json');
     
     Route::get('karyawan', [UserController::class, 'index'])->name('karyawan.index');
     
     Route::resource('cucian', CucianController::class)->except(['show', 'destroy']);
+    Route::get('cucian/json', [CucianController::class, 'data'])->name('cucian.json');
     
     Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+    Route::get('transaksi/json', [TransaksiController::class, 'data'])->name('transaksi.json');
     
     Route::post('transaksi/{transaksi}/show', [TransaksiController::class, 'show'])->name('transaksi.show');
 

@@ -6,6 +6,7 @@ use App\DataTables\PelangganDataTable;
 use App\Models\Pelanggan;
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PelangganController extends Controller
 {
@@ -14,12 +15,17 @@ class PelangganController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(PelangganDataTable $dataTable)
+    public function index()
     {
-        // $p = Pelanggan::where('outlet_id', auth()->user()->outlet->id)->latest()->paginate(10);
-        // return view('pelanggan.index', compact('p'));
+        return view('pelanggan.index');
+    }
 
-        return $dataTable->render('pelanggan.index');
+    public function data()
+    {
+        $model = Pelanggan::where('outlet_id', '=', auth()->user()->outlet->id);
+        return DataTables::eloquent($model)
+                            ->addIndexColumn()
+                            ->toJson();
     }
 
 }

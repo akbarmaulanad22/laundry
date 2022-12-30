@@ -8,7 +8,7 @@
     border-color: #ddd !important;
 }
 
-.dataTables_length, label, select{
-    padding-right: 25px !important;
-
+#example_filter {
+    padding-bottom: 1rem !important;
+    padding-top: 1rem !important;
 }

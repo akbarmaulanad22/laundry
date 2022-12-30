@@ -4,7 +4,11 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Cucian;
 use App\Models\Outlet;
+use App\Models\Pelanggan;
+use App\Models\Transaksi;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -54,7 +58,7 @@ class DatabaseSeeder extends Seeder
             'telepon' => '089862659825'
         ]);
 
-        \App\Models\User::create([
+        User::create([
             'outlet_id' => $o->id,
             'name' => 'Barrr',
             'email' => 'barr@example.com',
@@ -62,9 +66,23 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt(123123123),
         ])->assignRole($role1);
 
-        \App\Models\User::factory(5000)->create()->each(function ($user) {
+        User::create([
+            'outlet_id' => $o->id,
+            'name' => 'Will',
+            'email' => 'will@example.com',
+            'telephone' => '089862659825',
+            'password' => bcrypt(123123123),
+        ])->assignRole($role2);
+
+        User::factory(100)->create()->each(function ($user) {
             $user->assignRole(3);
         });
+
+        Pelanggan::factory(100)->create();
+
+        Transaksi::factory(100)->create();
+
+        Cucian::factory(100)->create();
         
     }
 }
