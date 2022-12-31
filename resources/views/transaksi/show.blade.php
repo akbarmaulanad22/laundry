@@ -12,12 +12,12 @@
          </p>
         </div>
       </div>
-      <div class="p-9">
+      <div class="px-9">
         <div class="flex w-full">
-          <div class="grid grid-cols-4 gap-12">
+          <div class="grid grid-cols-4 gap-4 md:gap-12">
             <div class="text-sm font-light text-slate-500">
               <p class="text-sm font-normal text-slate-700">Kode Transaksi</p>
-              <p class="pt-11" >{{ $transaksi->kode_transaksi }}</p>
+              <p class="pt-11" >{{ $transaksi->kode }}</p>
             </div>
             <div class="text-sm font-light text-slate-500">
               <p class="text-sm font-normal text-slate-700">Outlet</p>
@@ -31,14 +31,17 @@
                 Nama
                 </p>
               <p>{{ $transaksi->pelanggan->nama }}</p>
-              <p class="mt-8 md:mt-3 text-sm font-normal text-slate-700">
+              <p class="mt-3 md:mt-3 text-sm font-normal text-slate-700">
                 Alamat
                 </p>
               <p>{{ $transaksi->pelanggan->alamat }}</p>
             </div>
             <div class="text-sm font-light text-slate-500">
-              <p class="text-sm font-normal text-slate-700">Tanggal</p>
-              <p>2022-10-01</p>
+              <p class="text-sm font-normal text-slate-700">Tanggal pembayaran</p>
+              <p>
+                {{ $transaksi->tanggal_pembayaran }}
+                2022-10-10
+              </p>
       
               <p class="mt-3 text-sm font-normal text-slate-700">Status</p>
               <p>{{ $transaksi->status }}</p>
@@ -97,7 +100,7 @@
              Subtotal
             </th>
             <td class="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
-              {{ $transaksi->cucians->sum('harga') }}
+              Rp. {{ $transaksi->cucians->sum('harga') }}
             </td>
            </tr>
            <tr>
@@ -130,7 +133,7 @@
              Total
             </th>
             <td class="pt-4 pl-3 pr-4 text-sm font-normal text-right text-slate-700 sm:pr-6 md:pr-0">
-             Rp. 0
+             Rp. {{ $transaksi->cucians->sum('harga') }}
             </td>
            </tr>
           </tfoot>

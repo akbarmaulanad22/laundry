@@ -114,6 +114,9 @@ class TransaksiController extends Controller
                             ->addColumn('action', function($model){
                                 return view('transaksi.button', compact('model'));
                             })
+                            // ->editColumn('created_at',  function (Transaksi $transaksi){
+                            //     return $transaksi->created_at->format('');
+                            // })
                             ->rawColumns(['cucian', 'action'])
                             ->toJson();
     }
