@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\TransaksiDataTable;
 use App\Models\Pelanggan;
 use App\Models\Transaksi;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -94,13 +95,25 @@ class TransaksiController extends Controller
         //
     }
 
-    public function data()
+    public function data(Request $request)
     {
-        $model = Transaksi::with('cucians')
+        $model = Transaksi::with(['cucians', 'pelanggan'])
                         ->where('outlet_id', '=', auth()->user()->outlet->id);
+
+        if ($request->get('from') != null) {
+            $model->whereDate('created_at', '>=', $request->get('from'));
+        }
+        if ($request->get('to') != null) {
+            if ($request->get('to') < $request->get('from')) {
+                $model->whereDate('created_at', '<=', $request->get('from'));
+            }else {
+                $model->whereDate('created_at', '<=', $request->get('to'));
+            }
+        }
+                        
         return DataTables::eloquent($model)
                             ->addIndexColumn()
-                            ->addColumn('nama', function (Transaksi $transaksi) {
+                            ->addColumn('pelanggan', function (Transaksi $transaksi) {
                                 return $transaksi->pelanggan->nama;
                             })
                             ->addColumn('cucian', function (Transaksi $transaksi) {
@@ -114,9 +127,9 @@ class TransaksiController extends Controller
                             ->addColumn('action', function($model){
                                 return view('transaksi.button', compact('model'));
                             })
-                            // ->editColumn('created_at',  function (Transaksi $transaksi){
-                            //     return $transaksi->created_at->format('');
-                            // })
+                            ->editColumn('created_at',  function (Transaksi $transaksi){
+                                return $transaksi->created_at->format('j F Y');;
+                            })
                             ->rawColumns(['cucian', 'action'])
                             ->toJson();
     }

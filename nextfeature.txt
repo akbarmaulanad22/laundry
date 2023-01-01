@@ -1,12 +1,13 @@
-cetak laporan transaksi berdasarkan tanggal 
 tambah diskon
 tambah pajak
 ubah tampilan home
 ubah user profile
 ubah Laundry profile
 filtering data karyawan, pelanggan, cucian, transaksi
+urutkan nama, dan serach cucian di transaksi table
 
 
+cetak laporan transaksi berdasarkan tanggal (completed)
 mengganti tampilan table ke laravel yajra (completed)
 role (completed) 
 cetak struk transaksi (completed) 

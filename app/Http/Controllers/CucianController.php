@@ -67,7 +67,7 @@ class CucianController extends Controller
             'user_id' => auth()->user()->id,
             'outlet_id' => auth()->user()->outlet->id,
             'pelanggan_id' => $p->id,
-            'kode_transaksi' => '12345678'
+            'kode' => '12345678'
         ]);
 
         for($i = 0; $i < count($request->nama_cucian); $i++)

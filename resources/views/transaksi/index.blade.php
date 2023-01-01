@@ -29,11 +29,11 @@
                         <div class="flex justify-end">
                             <div class="px-10">
                                 <label for="min">From</label>
-                                <input type="date" name="min" id="min">
+                                <input type="date" name="min" id="fromDate" class="dateRange">
                             </div>
                             <div class="">
                                 <label for="min">To</label>
-                                <input type="date" name="min" id="min">
+                                <input type="date" name="min" id="toDate" class="dateRange">
                             </div>
                         </div>
                     </div>
@@ -46,6 +46,7 @@
                                     <th width="20%">Nama</th>
                                     <th width="15%">Status</th>
                                     <th width="20%">Cucian</th>
+                                    <th width="20%">Tanggal</th>
                                     <th width="10%">Total</th>
                                     <th>Action</th>
                                 </tr>
@@ -59,16 +60,36 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#example').DataTable({
+
+            let table = $('#example');
+
+            $('.dateRange').on('change', function (){
+                
+                let fromDate = $('#fromDate').val(); 
+                let toDate = $('#toDate').val(); 
+                
+                table.on('preXhr.dt', function ( e, settings, data ) {
+                    data.from = fromDate;
+                    data.to = toDate;
+
+                    console.log(data);
+                    
+                } )
+
+                table.DataTable().ajax.reload()
+            });
+            
+            table.DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('transaksi.json') }}',
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
                     {data: 'kode', name: 'kode'},
-                    {data: 'nama', name: 'nama'},
+                    {data: 'pelanggan', name: 'pelanggan.nama', orderable: false},
                     {data: 'status', name: 'status'},
-                    {data: 'cucian', name: 'cucian'},
+                    {data: 'cucian', name: 'cucian.nama', orderable: false, searchable:false},
+                    {data: 'created_at', name: 'created_at'},
                     {data: 'total', name: 'total'},
                     {data: 'action', name: 'action', orderable: false , searchable: false},
                 ],
@@ -106,6 +127,10 @@
                     },
                 ]
             });
+
+
+            
+            
         } );
     </script>
 @endpush
