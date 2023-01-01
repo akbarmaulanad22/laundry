@@ -4,9 +4,10 @@ ubah tampilan home
 ubah user profile
 ubah Laundry profile
 filtering data karyawan, pelanggan, cucian, transaksi
-urutkan nama, dan serach cucian di transaksi table
+urutkan nama di transaksi table
 
 
+search cucian di transaksi table (completed)
 cetak laporan transaksi berdasarkan tanggal (completed)
 mengganti tampilan table ke laravel yajra (completed)
 role (completed) 

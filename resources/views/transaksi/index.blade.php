@@ -44,8 +44,8 @@
                                     <th width="5%">No</th>
                                     <th width="10%">Kode</th>
                                     <th width="20%">Nama</th>
-                                    <th width="15%">Status</th>
                                     <th width="20%">Cucian</th>
+                                    <th width="15%">Status</th>
                                     <th width="20%">Tanggal</th>
                                     <th width="10%">Total</th>
                                     <th>Action</th>
@@ -71,9 +71,6 @@
                 table.on('preXhr.dt', function ( e, settings, data ) {
                     data.from = fromDate;
                     data.to = toDate;
-
-                    console.log(data);
-                    
                 } )
 
                 table.DataTable().ajax.reload()
@@ -84,14 +81,14 @@
                 serverSide: true,
                 ajax: '{{ route('transaksi.json') }}',
                 columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-                    {data: 'kode', name: 'kode'},
-                    {data: 'pelanggan', name: 'pelanggan.nama', orderable: false},
-                    {data: 'status', name: 'status'},
-                    {data: 'cucian', name: 'cucian.nama', orderable: false, searchable:false},
-                    {data: 'created_at', name: 'created_at'},
-                    {data: 'total', name: 'total'},
-                    {data: 'action', name: 'action', orderable: false , searchable: false},
+                    {data: 'DT_RowIndex',   name: 'DT_RowIndex',      orderable: false, searchable: false},
+                    {data: 'kode',          name: 'kode',             orderable: false},
+                    {data: 'pelanggan',     name: 'pelanggan.nama',   orderable: false},
+                    {data: 'cucians',       name: 'cucians.nama',     orderable: false},
+                    {data: 'status',        name: 'status',           orderable: false , searchable: false},
+                    {data: 'created_at',    name: 'created_at',       orderable: false , searchable: false},
+                    {data: 'total',         name: 'total',            orderable: false , searchable: false},
+                    {data: 'action',        name: 'action',           orderable: false , searchable: false},
                 ],
                 lengthChange: false,
                 searchDelay: 200,

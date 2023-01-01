@@ -110,13 +110,13 @@ class TransaksiController extends Controller
                 $model->whereDate('created_at', '<=', $request->get('to'));
             }
         }
-                        
+
         return DataTables::eloquent($model)
                             ->addIndexColumn()
                             ->addColumn('pelanggan', function (Transaksi $transaksi) {
                                 return $transaksi->pelanggan->nama;
                             })
-                            ->addColumn('cucian', function (Transaksi $transaksi) {
+                            ->addColumn('cucians', function (Transaksi $transaksi) {
                                 return $transaksi->cucians->map(function($cucian) {
                                     return $cucian->nama;
                                 })->implode('<br>');
@@ -130,7 +130,7 @@ class TransaksiController extends Controller
                             ->editColumn('created_at',  function (Transaksi $transaksi){
                                 return $transaksi->created_at->format('j F Y');;
                             })
-                            ->rawColumns(['cucian', 'action'])
+                            ->rawColumns(['cucians', 'action'])
                             ->toJson();
     }
 }
