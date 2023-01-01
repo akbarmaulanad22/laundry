@@ -189,7 +189,9 @@ class CucianController extends Controller
         return DataTables::eloquent($model)
                             ->addIndexColumn()
                             ->addColumn('action', function($model){
-                                return view('cucian.button', compact('model'));
+                                if (auth()->user()->hasRole(['Admin', 'Kasir'])) {
+                                    return view('cucian.button', compact('model'));
+                                }
                             })
                             ->rawColumns(['action'])
                             ->toJson();

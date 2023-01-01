@@ -77,7 +77,9 @@ class UserController extends Controller
                                 })->implode('<br>');
                             })
                             ->addColumn('action', function($model){
-                                return view('karyawan.button', compact('model'));
+                                if (auth()->user()->hasRole(['Owner'])) {
+                                    return view('karyawan.button', compact('model'));
+                                }
                             })
                             ->rawColumns(['action'])
                             ->toJson();
