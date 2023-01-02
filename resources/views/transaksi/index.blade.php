@@ -10,21 +10,21 @@
                 <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
                     <div class="sm:flex items-center justify-between">
                         <div class="flex items-center justify-between">
-                            <a class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" href="#">
+                            <button type="button" class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800 status-button" value="">
                                 <div class="py-1 px-3 bg-indigo-100 text-indigo-700 rounded-full">
                                     <p>Semua</p>
                                 </div>
-                            </a>
-                            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" href="#">
+                            </button>
+                            <button type="button" class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 status-button sm:ml-8" value="Dibayar">
                                 <div class="py-1 px-3 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
                                     <p>Dibayar</p>
                                 </div>
-                            </a>
-                            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" href="#">
+                            </button>
+                            <button type="button" class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 status-button sm:ml-8" value="Belum dibayar">
                                 <div class="py-1 px-3 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
                                     <p>Belum dibayar</p>
                                 </div>
-                            </a>
+                            </button>
                         </div>
                         <div class="flex justify-end">
                             <div class="px-10">
@@ -74,6 +74,16 @@
                 } )
 
                 table.DataTable().ajax.reload()
+            });
+            
+            $('.status-button').click(function() {
+                let status = $(this).val();
+                table.on('preXhr.dt', function ( e, settings, data ) {
+                    data.status = status;
+                } )
+
+                table.DataTable().ajax.reload()
+
             });
             
             table.DataTable({

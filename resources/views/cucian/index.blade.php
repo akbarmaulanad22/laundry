@@ -9,33 +9,45 @@
                 </div>
                 
                 <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
-                    <div class="sm:flex items-center justify-between">
-                        <div class="flex items-center justify-between">
-                            <a class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" href="#">
+                    <div class="flex justify-between">
+                            {{-- <button type="button" class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" value="">
                                 <div class="py-1 px-3 bg-indigo-100 text-indigo-700 rounded-full">
                                     <p>Semua</p>
                                 </div>
-                            </a>
-                            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" href="#">
+                            </button> --}}
+                            
+                        <div class="flex justify-start scale-75 md:scale-100 ">
+                            <label for="jenis" class="my-auto text-base font-medium text-gray-700">Jenis</label>
+                            <select id="jenis" name="jenis" class="mx-4 block w-full py-2 pr-8 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="">Semua</option>
+                                @foreach ($jenisCucian as $j)
+                                    <option value="{{ $j->jenis }}">{{ $j->jenis }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                            
+                            {{-- <button type="button" class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" value="">
                                 <div class="py-1 px-3 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
                                     <p>Baru</p>
                                 </div>
-                            </a>
-                            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" href="#">
+                            </button>
+                            <button type="button" class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" value="">
                                 <div class="py-1 px-3 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
                                     <p>Dicuci</p>
                                 </div>
-                            </a>
-                            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" href="#">
+                            </button>
+                            <button type="button" class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" value="">
                                 <div class="py-1 px-3 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
                                     <p>Selesai</p>
                                 </div>
+                            </button> --}}
+                        @role(['Admin', 'Kasir'])
+                        <div class="flex justify-start scale-90 md:scale-100  my-auto">
+                            <a  href="{{ route('cucian.create') }}"  class="mx-4 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 px-5 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded">
+                                <p class="text-sm text-center  font-medium leading-none text-white md:hidden">Tambah</p>
+                                <p class="hidden text-sm text-center  font-medium leading-none text-white md:block">Tambah cucian</p>
                             </a>
                         </div>
-                        @role(['Admin', 'Kasir'])
-                            <a  href="{{ route('cucian.create') }}"  class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded text-sm font-medium leading-none text-white">
-                                <p class="text-sm font-medium leading-none text-white">Tambah Cucian</p>
-                            </a>
                         @endrole
                     </div>
                     <div class="mt-7 overflow-x-auto">
@@ -185,7 +197,21 @@
 
     <script>
         $(document).ready(function() {
-            $('#example').DataTable({
+
+            let table = $('#example');
+
+            $('#jenis').on('change', function (){
+                
+                let jenis = $('#jenis').val(); 
+                
+                table.on('preXhr.dt', function ( e, settings, data ) {
+                    data.jenis = jenis;
+                } )
+
+                table.DataTable().ajax.reload()
+            });
+            
+            table.DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('cucian.json') }}',

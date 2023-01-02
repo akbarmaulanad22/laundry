@@ -64,11 +64,20 @@ class UserController extends Controller
         return to_route('karyawan.index');
     }
 
-    public function data()
+    public function data(Request $request)
     {
-        $model = User::with('roles')
-                        ->whereRelation('roles', 'name', '!=', 'Owner')
-                        ->where('outlet_id', '=', auth()->user()->outlet->id);
+        $roleRequest = $request->get('role');
+
+        if ($request->get('role') != null) {
+            
+            $model= User::with('roles')
+                        ->whereRelation('roles', 'name', '=', $roleRequest);
+        }else {
+            $model= User::with('roles');
+        }
+                        
+        $model->whereRelation('roles', 'name', '!=', 'Owner')
+                ->where('outlet_id', '=', auth()->user()->outlet->id);
         return DataTables::eloquent($model)
                             ->addIndexColumn()
                             ->addColumn('roles', function (User $user) {

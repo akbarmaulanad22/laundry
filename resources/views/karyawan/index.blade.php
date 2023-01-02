@@ -10,21 +10,21 @@
                 <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
                     <div class="sm:flex items-center justify-between pt-1 pb-6">
                         <div class="flex items-center justify-between">
-                            <a class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" href="#">
+                            <button type="button"  class="role-button rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" value="">
                                 <div class="py-1 px-3 bg-indigo-100 text-indigo-700 rounded-full">
                                     <p>Semua</p>
                                 </div>
-                            </a>
-                            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" href="#">
+                            </button>
+                            <button type="button"  class="role-button rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" value="Admin">
                                 <div class="py-1 px-3 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
                                     <p>Admin</p>
                                 </div>
-                            </a>
-                            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" href="#">
+                            </button>
+                            <button type="button"  class="role-button rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 sm:ml-8" value="Kasir">
                                 <div class="py-1 px-3 text-gray-600 hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
                                     <p>Kasir</p>
                                 </div>
-                            </a>
+                            </button>
                         </div>
                         @role('Owner')
                             <a  href="{{ route('karyawan.create') }}"  class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-indigo-700 hover:bg-indigo-600 focus:outline-none rounded text-sm font-medium leading-none text-white">
@@ -56,7 +56,20 @@
 
     <script>
         $(document).ready(function() {
-            $('#example').DataTable({
+
+            let table = $('#example');
+
+            $('.role-button').click(function() {
+                let role = $(this).val();
+                table.on('preXhr.dt', function ( e, settings, data ) {
+                    data.role = role;
+                } )
+
+                table.DataTable().ajax.reload()
+
+            });
+            
+            table.DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route('karyawan.json') }}',

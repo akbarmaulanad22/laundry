@@ -8,7 +8,7 @@
                     </div>
                 </div>
                 <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
-                    <div class="sm:flex items-center justify-between">
+                    {{-- <div class="sm:flex items-center justify-between">
                         <div class="flex items-center justify-between">
                             <a class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" href="#">
                                 <div class="py-1 px-3 bg-indigo-100 text-indigo-700 rounded-full">
@@ -26,7 +26,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="mt-9 overflow-x-hidden md:overflow-x-auto">
                         <table id="example" class="display responsive nowrap" style="width:100%">
                             <thead>

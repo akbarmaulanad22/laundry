@@ -21,7 +21,7 @@ class CucianFactory extends Factory
             'outlet_id' => 1,
             'pelanggan_id' => fake()->numberBetween(1, 100),
             'nama' =>  fake()->words(3, true),
-            'jenis' =>  'Lainnya',
+            'jenis' =>  fake()->randomElement(['Kiloan', 'Selimut', 'Bed cover', 'Kaos', 'Lainnya']),
             'harga' => fake()->randomNumber(5, true)
         ];
     }

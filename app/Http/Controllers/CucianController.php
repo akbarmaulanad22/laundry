@@ -6,6 +6,7 @@ use App\Models\Cucian;
 use App\Models\Pelanggan;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 use Yajra\DataTables\Facades\DataTables;
 
 class CucianController extends Controller
@@ -17,7 +18,8 @@ class CucianController extends Controller
      */
     public function index()
     {
-        return view('cucian.index');
+        $jenisCucian = Cucian::select('jenis')->distinct()->get();
+        return view('cucian.index', compact('jenisCucian'));
     }
 
     /**
@@ -183,9 +185,14 @@ class CucianController extends Controller
         return back();
     }
 
-    public function data()
+    public function data(Request $request)
     {
         $model = Cucian::where('outlet_id', '=', auth()->user()->outlet->id);
+
+        if ($request->get('jenis') != null) {
+            $model->where('jenis', '=', $request->get('jenis'));    
+        }
+        
         return DataTables::eloquent($model)
                             ->addIndexColumn()
                             ->addColumn('action', function($model){

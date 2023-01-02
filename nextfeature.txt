@@ -5,6 +5,8 @@ ubah user profile
 ubah Laundry profile
 filtering data karyawan, pelanggan, cucian, transaksi
 urutkan nama di transaksi table
+fitur Membership pelanggan
+import excel
 
 
 search cucian di transaksi table (completed)

@@ -21,6 +21,7 @@ class TransaksiFactory extends Factory
             'outlet_id' => 1,
             'pelanggan_id' => fake()->numberBetween(1, 100),
             'kode' => fake()->numerify('c-#####'),
+            'status' => fake()->randomElement(['Dibayar', 'Belum dibayar'])
         ];
     }
 }

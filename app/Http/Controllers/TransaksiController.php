@@ -111,6 +111,11 @@ class TransaksiController extends Controller
             }
         }
 
+        if ($request->get('status')) {
+            $model->where('status', '=', $request->get('status'));
+        }
+        
+
         return DataTables::eloquent($model)
                             ->addIndexColumn()
                             ->addColumn('pelanggan', function (Transaksi $transaksi) {
