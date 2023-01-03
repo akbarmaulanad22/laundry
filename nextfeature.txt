@@ -1,14 +1,15 @@
 tambah diskon
 tambah pajak
 ubah tampilan home
-ubah user profile
 ubah Laundry profile
-filtering data karyawan, pelanggan, cucian, transaksi
 urutkan nama di transaksi table
 fitur Membership pelanggan
 import excel
+sweet alert
 
 
+ubah user profile (completed)
+filtering data karyawan, pelanggan, cucian, transaksi (completed)
 search cucian di transaksi table (completed)
 cetak laporan transaksi berdasarkan tanggal (completed)
 mengganti tampilan table ke laravel yajra (completed)

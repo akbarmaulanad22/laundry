@@ -73,4 +73,7 @@ Route::middleware(['auth', 'role:Owner|Admin|Kasir'])->group(function () {
     
     Route::post('transaksi/{transaksi}/show', [TransaksiController::class, 'show'])->name('transaksi.show');
 
+    Route::get('outlet', [OutletController::class, 'edit'])->name('outlet.edit');
+    Route::patch('outlet/update', [OutletController::class, 'update'])->name('outlet.update');
+
 });
