@@ -1,4 +1,3 @@
-tambah pajak
 ubah tampilan home
 urutkan nama di transaksi table
 fitur Membership pelanggan
@@ -6,6 +5,7 @@ import excel
 sweet alert
 
 
+tambah pajak (completed)
 tambah diskon (completed)
 ubah Laundry profile (completed)
 ubah user profile (completed)

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,8 @@ class TransaksiFactory extends Factory
             'outlet_id' => 1,
             'pelanggan_id' => fake()->numberBetween(1, 100),
             'kode' => fake()->numerify('c-#####'),
-            'status' => fake()->randomElement(['Dibayar', 'Belum dibayar'])
+            'status' => fake()->randomElement(['Dibayar', 'Belum dibayar']),
+            'batas_waktu' => Carbon::now()->addDays(5),
         ];
     }
 }

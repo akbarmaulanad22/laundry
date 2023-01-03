@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cucian;
 use App\Models\Pelanggan;
 use App\Models\Transaksi;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 use Yajra\DataTables\Facades\DataTables;
@@ -69,7 +70,9 @@ class CucianController extends Controller
             'user_id' => auth()->user()->id,
             'outlet_id' => auth()->user()->outlet->id,
             'pelanggan_id' => $p->id,
-            'kode' => '12345678'
+            'kode' => '12345678',
+            'batas_waktu' => Carbon::now()->addDays(5),
+            'tanggal_pembayaran' => Carbon::now()->addDays(5),
         ]);
 
         for($i = 0; $i < count($request->nama_cucian); $i++)

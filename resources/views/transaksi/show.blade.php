@@ -39,8 +39,7 @@
             <div class="text-sm font-light text-slate-500">
               <p class="text-sm font-normal text-slate-700">Tanggal pembayaran</p>
               <p>
-                {{ $transaksi->tanggal_pembayaran }}
-                2022-10-10
+                {{ $transaksi->tanggal_pembayaran ?? "-" }}
               </p>
       
               <p class="mt-3 text-sm font-normal text-slate-700">Status</p>
@@ -122,7 +121,7 @@
              Pajak
             </th>
             <td class="pt-4 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
-             Rp. 0
+             Rp. {{ $transaksi->pajak }}
             </td>
            </tr>
            <tr>
@@ -133,7 +132,7 @@
              Total
             </th>
             <td class="pt-4 pl-3 pr-4 text-sm font-normal text-right text-slate-700 sm:pr-6 md:pr-0">
-             Rp. {{ intval($transaksi->cucians->sum('harga') - ($transaksi->cucians->sum('harga') * $transaksi->diskon)) }}
+             Rp. {{ intval($transaksi->cucians->sum('harga') - ($transaksi->cucians->sum('harga') * $transaksi->diskon)) - $transaksi->pajak }}
             </td>
            </tr>
           </tfoot>
@@ -144,6 +143,9 @@
        <div class="mt-2 p-9">
         <div class="border-t pt-9 border-slate-200">
          <div class="text-sm font-light text-slate-700">
+          <p class="text-red-400 pb-1">
+            * batas waktu pembayaran anda {{ date('j F Y', strtotime($transaksi->batas_waktu)) }}
+          </p>
           <p>
             Terima kasih telah menggunakan jasa pencucian kami
           </p>

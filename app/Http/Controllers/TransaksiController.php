@@ -78,8 +78,15 @@ class TransaksiController extends Controller
         }
 
         $transaksi->update([
-            'status' => 'Dibayar'
+            'status' => 'Dibayar',
+            'tanggal_pembayaran' => Carbon::now()
         ]);
+
+        if ($transaksi->tanggal_pembayaran > $transaksi->batas_waktu) {
+            $transaksi->update([
+                'pajak' => 3000
+            ]);
+        }
 
         return back();
     }
@@ -127,7 +134,7 @@ class TransaksiController extends Controller
                                 })->implode('<br>');
                             })
                             ->addColumn('total', function (Transaksi $transaksi) {
-                                return intval($transaksi->cucians->sum('harga') - ($transaksi->cucians->sum('harga') * $transaksi->diskon));
+                                return intval($transaksi->cucians->sum('harga') - ($transaksi->cucians->sum('harga') * $transaksi->diskon) - $transaksi->pajak);
                             })
                             ->addColumn('action', function($model){
                                 return view('transaksi.button', compact('model'));

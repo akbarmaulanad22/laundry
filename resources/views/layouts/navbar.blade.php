@@ -28,9 +28,9 @@
                                 <hr class="border-t mx-2 border-gray-400">
                             </li>
                             <li>
-                                <form action="{{ route('logout') }}" method="post" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">
+                                <form action="{{ route('logout') }}" method="post" class="w-full px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">
                                     @csrf
-                                    <button type="submit">Logout</button>
+                                    <button type="submit" class="w-full text-start">Logout</button>
                                 </form>
                             </li>
                         </ul>
