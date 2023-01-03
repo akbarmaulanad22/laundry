@@ -1,13 +1,13 @@
-tambah diskon
 tambah pajak
 ubah tampilan home
-ubah Laundry profile
 urutkan nama di transaksi table
 fitur Membership pelanggan
 import excel
 sweet alert
 
 
+tambah diskon (completed)
+ubah Laundry profile (completed)
 ubah user profile (completed)
 filtering data karyawan, pelanggan, cucian, transaksi (completed)
 search cucian di transaksi table (completed)

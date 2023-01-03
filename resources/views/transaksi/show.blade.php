@@ -111,7 +111,7 @@
              Diskon
             </th>
             <td class="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
-             Rp. 0
+             Rp. {{ $transaksi->cucians->sum('harga') * $transaksi->diskon }}
             </td>
            </tr>
            <tr>
@@ -133,7 +133,7 @@
              Total
             </th>
             <td class="pt-4 pl-3 pr-4 text-sm font-normal text-right text-slate-700 sm:pr-6 md:pr-0">
-             Rp. {{ $transaksi->cucians->sum('harga') }}
+             Rp. {{ intval($transaksi->cucians->sum('harga') - ($transaksi->cucians->sum('harga') * $transaksi->diskon)) }}
             </td>
            </tr>
           </tfoot>

@@ -19,10 +19,10 @@ return new class extends Migration
             $table->foreignId('outlet_id')->references('id')->on('outlets')->onDelete('cascade');
             $table->foreignId('pelanggan_id')->references('id')->on('pelanggans')->onDelete('cascade');
             $table->string('kode', 100);
+            $table->double('diskon')->default(0);
             // $table->date('batas_waktu');
             // $table->date('tanggal_pembayaran');
             // $table->integer('biaya_tambahan')->length(11);
-            // $table->double('diskon');
             // $table->integer('pajak')->length(11);
             $table->enum('status', ['Dibayar', 'Belum Dibayar'])->default('Belum dibayar');
             $table->timestamps();

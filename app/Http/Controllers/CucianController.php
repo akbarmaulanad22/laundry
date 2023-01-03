@@ -85,6 +85,12 @@ class CucianController extends Controller
             ]);
         }
 
+        if ($t->cucians->sum('harga') >= 50000) {
+            $t->update([
+                'diskon' => 0.05
+            ]);
+        }
+        
         return to_route('cucian.index');
         
     }

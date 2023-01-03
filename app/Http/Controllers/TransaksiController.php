@@ -127,7 +127,7 @@ class TransaksiController extends Controller
                                 })->implode('<br>');
                             })
                             ->addColumn('total', function (Transaksi $transaksi) {
-                                return $transaksi->cucians->sum('harga');
+                                return intval($transaksi->cucians->sum('harga') - ($transaksi->cucians->sum('harga') * $transaksi->diskon));
                             })
                             ->addColumn('action', function($model){
                                 return view('transaksi.button', compact('model'));
