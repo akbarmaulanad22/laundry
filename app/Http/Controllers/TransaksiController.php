@@ -134,13 +134,14 @@ class TransaksiController extends Controller
                                 })->implode('<br>');
                             })
                             ->addColumn('total', function (Transaksi $transaksi) {
-                                return intval($transaksi->cucians->sum('harga') - ($transaksi->cucians->sum('harga') * $transaksi->diskon) - $transaksi->pajak);
+                                return $transaksi->total_harga;
+                                // return intval($transaksi->cucians->sum('harga') - ($transaksi->cucians->sum('harga') * $transaksi->diskon) - $transaksi->pajak);
                             })
                             ->addColumn('action', function($model){
                                 return view('transaksi.button', compact('model'));
                             })
                             ->editColumn('created_at',  function (Transaksi $transaksi){
-                                return $transaksi->created_at->format('j F Y');;
+                                return $transaksi->created_at->format('j F Y');
                             })
                             ->rawColumns(['cucians', 'action'])
                             ->toJson();

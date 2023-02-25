@@ -24,6 +24,7 @@ class TransaksiFactory extends Factory
             'kode' => fake()->numerify('c-#####'),
             'status' => fake()->randomElement(['Dibayar', 'Belum dibayar']),
             'batas_waktu' => Carbon::now()->addDays(5),
+            // 'total_harga' => fake()->numberBetween($min = 1500, $max = 6000),
         ];
     }
 }

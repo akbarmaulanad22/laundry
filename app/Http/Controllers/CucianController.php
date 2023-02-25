@@ -7,7 +7,6 @@ use App\Models\Pelanggan;
 use App\Models\Transaksi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 use Yajra\DataTables\Facades\DataTables;
 
 class CucianController extends Controller
@@ -75,9 +74,10 @@ class CucianController extends Controller
             'tanggal_pembayaran' => Carbon::now()->addDays(5),
         ]);
 
+        
         for($i = 0; $i < count($request->nama_cucian); $i++)
         {
-            Cucian::create([
+            $cucian = Cucian::create([
                 'transaksi_id' => $t->id,
                 'outlet_id' => auth()->user()->outlet->id,
                 'pelanggan_id' => $p->id,
@@ -86,13 +86,21 @@ class CucianController extends Controller
                 'jenis' => $rules['jenis'][$i],
 
             ]);
+
+            if ($t->cucians->sum('harga') >= 50000) {
+                $t->update([
+                    'diskon' => 0.02
+                ]);
+            }
+
+
         }
 
-        if ($t->cucians->sum('harga') >= 50000) {
-            $t->update([
-                'diskon' => 0.05
-            ]);
-        }
+        $totalHarga = $t->cucians->sum('harga') - ($t->cucians->sum('harga') * $t->diskon) - $t->pajak;
+
+        $t->update([
+            'total_harga' => $totalHarga
+        ]);
         
         return to_route('cucian.index');
         
